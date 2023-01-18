@@ -1,0 +1,17 @@
+{
+    "akylai": {
+        "password": "pwd-akylai123",
+        "username": "user-akylai",
+        "id": ""
+    },
+    "meri": {
+        "password": "pwd-meri123",
+        "username": "user-meri",
+        "id": ""
+    },
+    "ulan": {
+        "password": "pwd-ulan123",
+        "username": "user-ulan",
+        "id": ""
+    }
+}

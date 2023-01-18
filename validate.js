@@ -5,10 +5,10 @@ export default class Validate {
         this.handler = handler;
     }
 
-    validateMsg(msg) {
-        if(this.isInitBotCmd(msg)) console.log('initBotCmd')
+    async validateMsg(msg) {
+        if(this.isInitBotCmd(msg)) this.handler.initBotMessage(msg);
         else if(this.isStartCmd(msg)) this.handler.sendStartMessage(msg);
-        else if(this.isJoinMeCmd(msg)) console.log('isJoinMeCmd')
+        else if(this.isJoinMeCmd(msg)) await this.handler.joinMeMessage(msg);
         else if(this.isLoginCmd(msg)) console.log('isLoginCmd')
         else console.log('not correct command')
     }
