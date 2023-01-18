@@ -1,8 +1,13 @@
 export default class Validate {
+    handler;
 
-    validateMsg(msg, bot) {
+    constructor(handler) {
+        this.handler = handler;
+    }
+
+    validateMsg(msg) {
         if(this.isInitBotCmd(msg)) console.log('initBotCmd')
-        else if(this.isStartCmd(msg)) console.log('isStartCmd')
+        else if(this.isStartCmd(msg)) this.handler.sendStartMessage(msg);
         else if(this.isJoinMeCmd(msg)) console.log('isJoinMeCmd')
         else if(this.isLoginCmd(msg)) console.log('isLoginCmd')
         else console.log('not correct command')
