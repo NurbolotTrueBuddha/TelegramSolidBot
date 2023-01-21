@@ -1,7 +1,7 @@
 {
   "akylai": {
     "username_password": "user-akylai:pwd-akylai123",
-    "id": "699918906"
+    "id": ""
   },
   "meri": {
     "username_password": "user-meri_pwd-meri123",
@@ -9,10 +9,14 @@
   },
   "ulan": {
     "username_password": "user-ulan:pwd-ulan123",
-    "id": "5753800157"
+    "id": ""
   },
   "nurbolot": {
     "username_password": "user-nurbolot:pwd-nurbolot123",
-    "id": "450797571"
+    "id": ""
+  },
+  "bolot": {
+    "username_password": "user-nurbolot:pwd-bolot123",
+    "id": ""
   }
 }

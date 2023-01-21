@@ -45,11 +45,15 @@ export default class Validate {
 
     isLoginCmd(msg) {
         let { text } = msg;
-        if(text === 'Логин') {
+        if(text === 'Login') {
             return true;
         }
         else {
             return false;
         }
+    }
+
+    isLoginValidateEvent(msg) {
+        'user-ulan:pwd-ulan123'
     }
 }

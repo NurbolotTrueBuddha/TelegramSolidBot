@@ -41,75 +41,60 @@ export default class Handler {
         }
 
         if (flag) {
-            this.bot.sendMessage(groupId, 'Чтобы ознакомится с системой нажмите на кнопку Список команд', {
+            this.bot.sendMessage(groupId, 'Поздраляем вы теперь инициолизированы в системе Solid Bot.', {
                 reply_markup: {
                     keyboard: [
                         [{
-                            text: 'Список команд'
+                            text: 'Старт набор'
                         }],
                         [{
-                            text: 'Помощь'
+                            text: 'Список команд'
                         }]
                     ]
-                }
-            });
-            await this.bot.on('message', (msg) => {
-                let { chat: { id: groupId }, text } = msg;
-                if (text === 'Список команд') {
-                    this.bot.sendMessage(groupId, `List of inited member
-Если кто еще не добавлен в список. То ему нужно обязательно:
-1) Залогиниться в @testblablablabla_bot
-2) Добавить себя в группу через команду /joinme
-                    `)
                 }
             })
 
         }
         else {
-            this.bot.sendMessage(groupId, 'Чтобы начать пользоваться Solid bot нужно залогиниться в боте! @testblablablabla_bot')
-            console.log(msg)
+            this.bot.sendMessage(id, 'Что бы начать работать залогинтесь в', {
+                reply_markup: {
+                    keyboard: [
+                        [{
+                            text: 'Login'
+                        }]
+                    ]
+                }
+            })
+
+            this.bot.sendMessage(groupId, 'Вы не залогированы');
         }
     }
-    async loginMessage(msg) {
-        this.bot.sendMessage(msg.from.id, `Напишите свой логин и пароль
-        в таком формате.
-        user-ulan:pwd-ulan123`)
-        this.bot.on('message', async (msg) => {
-            let { from: { id }, text } = msg;
-            let userData = await fs.readFile('./user.json', { encoding: 'utf8' });
-            let converted = await JSON.parse(userData);
-            let flag = false
-            for (let prop in converted) {
-                if (converted[prop].username_password == text) {
-                    converted[prop].id = String(id)
-                    flag = true
-                }
-            }
-            converted =  JSON.stringify(converted, null, 2)
-            await fs.writeFile('./user.json', converted);
-            if (flag) {
-                await this.bot.sendMessage(id, `Поздравляю вы вошли в систему.
-                Можете начать работать с SOLID BOT!`, {
-                    reply_markup: {
-                        keyboard: [
-                            [{
-                                text: 'Мои инструкции'
-                            }],
-                            [{
-                                text: 'Что такое Scrum'
-                            }],
-                            [{
-                                text: 'Наша философия'
-                            }],
-                            [{
-                                text: 'Моя должность'
-                            }]
-                        ]
-                    }
-                });
-            }
-            
 
-        })
+
+    async loginMessage(msg) {
+        let { from: { id } } = msg;
+
+        let userData = await fs.readFile('./user.json', { encoding: 'utf8' });
+        let converted = JSON.parse(userData);
+
+        let flag = false;
+
+        for (let prop in converted) {
+            if (converted[prop].id == id) {
+                flag = true;
+            }
+        }
+
+        if(flag) {
+            this.bot.sendMessage(id, 'Вы уже зарегистрированы.');
+        }
+        else {
+            this.bot.sendMessage(id, 'Напишите свой логин и парольв таком формате: user-ulan:pwd-ulan123');
+        }
     }
+
+    async checkLoginCreds() {
+
+    }
+
 }
