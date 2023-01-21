@@ -9,7 +9,7 @@ export default class Handler {
 
     sendStartMessage(msg) {
         let { from: { id } } = msg;
-        this.bot.sendMessage(id, `Чтобы Solid bot начал работать нужно проинциализировать бота в группе админом. А участники должны залогиниться в боте!,
+        this.bot.sendMessage(id, `Чтобы IK_entertaiment начал работать нужно проинциализировать бота в группе админом. А участники должны залогиниться в боте!,
         После нажать на кнопку здесь Логин`,{
             reply_markup: {
                 keyboard: [
@@ -24,7 +24,7 @@ export default class Handler {
     initBotMessage(msg) {
         let { chat: { id } } = msg;
 
-        this.bot.sendMessage(id, 'Solid bot инициализированв группе');
+        this.bot.sendMessage(id, 'IK_entertaiment инициализированв группе');
     }
 
     async joinMeMessage(msg) {
@@ -41,100 +41,75 @@ export default class Handler {
         }
 
         if (flag) {
-            this.bot.sendMessage(groupId, 'Поздраляем вы теперь инициолизированы в системе Solid Bot.', {
+            this.bot.sendMessage(groupId, 'Чтобы ознакомится с системой нажмите на кнопку Список команд', {
                 reply_markup: {
                     keyboard: [
-                        [{
-                            text: 'Старт набор'
-                        }],
                         [{
                             text: 'Список команд'
+                        }],
+                        [{
+                            text: 'Помощь'
                         }]
                     ]
+                }
+            });
+            await this.bot.on('message', (msg) => {
+                let { chat: { id: groupId }, text } = msg;
+                if (text === 'Список команд') {
+                    this.bot.sendMessage(groupId, `List of inited member
+Если кто еще не добавлен в список. То ему нужно обязательно:
+1) Залогиниться в @testblablablabla_bot
+2) Добавить себя в группу через команду /joinme
+                    `)
                 }
             })
 
         }
         else {
-            this.bot.sendMessage(id, 'Что бы начать работать залогинтесь в', {
-                reply_markup: {
-                    keyboard: [
-                        [{
-                            text: 'Login'
-                        }]
-                    ]
-                }
-            })
-
-            this.bot.sendMessage(groupId, 'Вы не залогированы');
+            this.bot.sendMessage(groupId, 'Чтобы начать пользоваться IK_entertaiment нужно залогиниться в боте! @testblablablabla_bot')
+            console.log(msg)
         }
     }
-
-
     async loginMessage(msg) {
-        let { from: { id } } = msg;
-
-        let userData = await fs.readFile('./user.json', { encoding: 'utf8' });
-        let converted = JSON.parse(userData);
-
-        let flag = false;
-
-        for (let prop in converted) {
-            if (converted[prop].id == id) {
-                flag = true;
-            }
-        }
-
-        if(flag) {
-            this.bot.sendMessage(id, 'Вы уже зарегистрированы.');
-        }
-        else {
-            let { text } = msg;
-            this.bot.sendMessage(id, 'Напишите свой логин и парольв таком формате: user-ulan:pwd-ulan123');
-        }
-    }
-
-    async checkLoginCreds(msg) {
-        let { text, from: { id } } = msg;
-
-        let userData = await fs.readFile('./user.json', { encoding: 'utf8' });
-        let converted = JSON.parse(userData);
-
-        let flag = false;
-        let [ login, password ] = text.split(':')// ['user-ulan', 'pwd-ulan123']
-
-        for (let prop in converted) {
-            if (converted[prop].password == password && converted[prop].username == login) {
-                flag = true;
-            }
-        }
-
-        if(flag) {
-            this.bot.sendMessage(id, 'Поздравляю вы вошли в систему.', {
-                reply_markup: {
-                    keyboard: [
-                        [{
-                            text: 'Мои инструкции'
-                        }],
-                        [{
-                            text: 'Что такое Scrum'
-                        }],
-                        [{
-                            text: 'Наша философия'
-                        }],
-                        [{
-                            text: 'Моя должность'
-                        }]
-                    ]
+        this.bot.sendMessage(msg.from.id, `Напишите свой логин и пароль
+        в таком формате.
+        user-ulan:pwd-ulan123`)
+        this.bot.on('message', async (msg) => {
+            let { from: { id }, text } = msg;
+            let userData = await fs.readFile('./user.json', { encoding: 'utf8' });
+            let converted = await JSON.parse(userData);
+            let flag = false
+            for (let prop in converted) {
+                if (converted[prop].username_password == text) {
+                    converted[prop].id = String(id)
+                    flag = true
                 }
-            })
-        }
-        else {
-            this.bot.sendMessage(id, 'Не правильный логин или пароль')
-        }
-    }
+            }
+            converted =  JSON.stringify(converted, null, 2)
+            await fs.writeFile('./user.json', converted);
+            if (flag) {
+                await this.bot.sendMessage(id, `Поздравляю вы вошли в систему.
+                Можете начать работать с IK_ENTERTAIMENT!`, {
+                    reply_markup: {
+                        keyboard: [
+                            [{
+                                text: 'Мои инструкции'
+                            }],
+                            [{
+                                text: 'Что такое Scrum'
+                            }],
+                            [{
+                                text: 'Наша философия'
+                            }],
+                            [{
+                                text: 'Моя должность'
+                            }]
+                        ]
+                    }
+                });
+            }
+            
 
-    async teamList(msg) {
-        
+        })
     }
 }

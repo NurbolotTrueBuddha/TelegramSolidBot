@@ -1,17 +1,30 @@
 {
   "akylai": {
-      "password": "pwd-akylai123",
-      "username": "user-akylai",
-      "id": ""
+    "username_password": "user-akylai:pwd-akylai123",
+    "id": ""
   },
   "meri": {
-      "password": "pwd-meri123",
-      "username": "user-meri",
-      "id": ""
+    "username_password": "user-meri_pwd-meri123",
+    "id": ""
   },
   "ulan": {
-      "password": "pwd-ulan123",
-      "username": "user-ulan",
-      "id": ""
+    "username_password": "user-ulan:pwd-ulan123",
+    "id": ""
+  },
+  "akbar": {
+    "username_password": "user-akbar:pwd-akbar123",
+    "id": ""
+  },
+  "erzhan": {
+    "username_password": "user-erzhan:pwd-erzhan123",
+    "id": "420084878"
+  },
+  "mustafa": {
+    "username_password": "user-musatafa:pwd-mustafa66",
+    "id": ""
+  },
+  "nurbolot": {
+    "username_password": "user-nurbolot:pwd-nurbolot123",
+    "id": ""
   }
 }
