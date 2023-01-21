@@ -1,22 +1,17 @@
 {
   "akylai": {
-    "username_password": "user-akylai:pwd-akylai123",
-    "id": ""
+      "password": "pwd-akylai123",
+      "username": "user-akylai",
+      "id": ""
   },
   "meri": {
-    "username_password": "user-meri_pwd-meri123",
-    "id": ""
+      "password": "pwd-meri123",
+      "username": "user-meri",
+      "id": ""
   },
   "ulan": {
-    "username_password": "user-ulan:pwd-ulan123",
-    "id": ""
-  },
-  "nurbolot": {
-    "username_password": "user-nurbolot:pwd-nurbolot123",
-    "id": ""
-  },
-  "bolot": {
-    "username_password": "user-nurbolot:pwd-bolot123",
-    "id": ""
+      "password": "pwd-ulan123",
+      "username": "user-ulan",
+      "id": ""
   }
 }

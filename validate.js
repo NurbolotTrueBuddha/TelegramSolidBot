@@ -9,7 +9,9 @@ export default class Validate {
         if(this.isInitBotCmd(msg)) this.handler.initBotMessage(msg);
         else if(this.isStartCmd(msg)) this.handler.sendStartMessage(msg);
         else if(this.isJoinMeCmd(msg)) await this.handler.joinMeMessage(msg);
-        else if(this.isLoginCmd(msg)) this.handler.loginMessage(msg)
+        else if(this.isLoginCmd(msg)) await this.handler.loginMessage(msg)
+        else if(this.isLoginValidateEvent(msg)) await this.handler.checkLoginCreds(msg)
+        else if(this.isTeamListCmd(msg)) await this.handler.teamList(msg);
         else console.log('not correct command')
     }
 
@@ -54,6 +56,23 @@ export default class Validate {
     }
 
     isLoginValidateEvent(msg) {
-        'user-ulan:pwd-ulan123'
+        let { text } = msg;
+
+        if(text.includes('user-') && text.includes('pwd-')) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    isTeamListCmd(msg) {
+        let { text } = msg;
+        if(text === 'Список команд') {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

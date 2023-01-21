@@ -89,12 +89,52 @@ export default class Handler {
             this.bot.sendMessage(id, 'Вы уже зарегистрированы.');
         }
         else {
+            let { text } = msg;
             this.bot.sendMessage(id, 'Напишите свой логин и парольв таком формате: user-ulan:pwd-ulan123');
         }
     }
 
-    async checkLoginCreds() {
+    async checkLoginCreds(msg) {
+        let { text, from: { id } } = msg;
 
+        let userData = await fs.readFile('./user.json', { encoding: 'utf8' });
+        let converted = JSON.parse(userData);
+
+        let flag = false;
+        let [ login, password ] = text.split(':')// ['user-ulan', 'pwd-ulan123']
+
+        for (let prop in converted) {
+            if (converted[prop].password == password && converted[prop].username == login) {
+                flag = true;
+            }
+        }
+
+        if(flag) {
+            this.bot.sendMessage(id, 'Поздравляю вы вошли в систему.', {
+                reply_markup: {
+                    keyboard: [
+                        [{
+                            text: 'Мои инструкции'
+                        }],
+                        [{
+                            text: 'Что такое Scrum'
+                        }],
+                        [{
+                            text: 'Наша философия'
+                        }],
+                        [{
+                            text: 'Моя должность'
+                        }]
+                    ]
+                }
+            })
+        }
+        else {
+            this.bot.sendMessage(id, 'Не правильный логин или пароль')
+        }
     }
 
+    async teamList(msg) {
+        
+    }
 }
